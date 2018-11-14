@@ -1,0 +1,1 @@
+# linkerd-static-namer
