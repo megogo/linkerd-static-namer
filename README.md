@@ -1,8 +1,8 @@
-##Static Namer Plugin
+## Static Namer Plugin
 
 This namer provides support for static service discovery via linkerd.yaml.
 
-#Building
+# Building
 This plugin is built with sbt. Run sbt from the plugins directory.
 
 ```sbtshell
@@ -10,7 +10,7 @@ sbt assembly
 ```
 This will produce the plugin fat-jar at /target/scala-2.12/.
 
-#Installing
+# Installing
 To install this plugin with linkerd, simply move the plugin jar into linkerd's plugin directory ($L5D_HOME/plugins). 
 Then add a namers block in your linkerd config:
 
@@ -20,7 +20,7 @@ namers:
   experimental: true
   services:
   - service1:127.0.0.1 8080 * 2, 127.0.0.1 8081
-  - service2:127.0.0.1 6080
+  - service2:service.com 6080
   
 routers:
 - protocol: http
