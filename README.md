@@ -27,7 +27,7 @@ routers:
   identifier:
     kind: io.l5d.path
     segments: 1
-    consume: false
+    consume: true
   dtab: |
     /svc/api => /#/io.static/api;
     /svc/web => /#/io.static/web;
