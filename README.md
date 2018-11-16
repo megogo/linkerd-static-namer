@@ -39,5 +39,5 @@ routers:
     ip: 0.0.0.0
 ```
 
-After starting linkerd, each request to 127.0.0.1:4140/api/* will be proxy to api service 127.0.0.1:8080/* or 127.0.0.1:8081/*.
+After starting linkerd, each request to 127.0.0.1:4140/api/* will be proxy to **api** service 127.0.0.1:8080/* or 127.0.0.1:8081/*.
 It should be note that linkerd will proxy requests to 127.0.0.1:8080 two times often, than to 127.0.0.1:8081
