@@ -1,5 +1,5 @@
 # Static Namer Plugin
-This [linkerd](https://linkerd.io/) namer plugin which provides supporting for static service discovery via raw configuration in
+This is [linkerd](https://linkerd.io/) namer plugin which provides supporting for static service discovery via raw configuration in
 linkerd.yaml. 
 
 ## Building
