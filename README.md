@@ -1,9 +1,9 @@
 # Static Namer Plugin
-
-This namer provides support for static service discovery via linkerd.yaml.
+This [linkerd](https://linkerd.io/) namer plugin which provides supporting for static service discovery via raw configuration in
+linkerd.yaml. 
 
 ## Building
-This plugin is built with sbt. Run sbt from the plugins directory.
+This plugin is built with sbt. Run next sbt commands from the plugins directory:
 
 ```sbtshell
 sbt assembly
@@ -19,8 +19,8 @@ namers:
 - kind: io.static
   experimental: true
   services:
-  - service1:127.0.0.1 8080 * 2, 127.0.0.1 8081
-  - service2:service.com 6080
+  - api:127.0.0.1 8080 * 2, 127.0.0.1 8081
+  - web:service.com 6080
   
 routers:
 - protocol: http
@@ -29,7 +29,7 @@ routers:
     segments: 1
     consume: false
   dtab: |
-    /svc/japi => /#/io.static/japi;
+    /svc/api => /#/io.static/api;
     /svc/web => /#/io.static/web;
 
   httpAccessLog: logs/access.log
@@ -38,3 +38,6 @@ routers:
   - port: 4140
     ip: 0.0.0.0
 ```
+
+After starting linkerd, each request to 127.0.0.1:4140/api/* will be proxy to api service 127.0.0.1:8080/* or 127.0.0.1:8081/*.
+It should be note that linkerd will proxy requests to 127.0.0.1:8080 two times often, than to 127.0.0.1:8081
