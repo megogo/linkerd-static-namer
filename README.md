@@ -16,7 +16,7 @@ Then add a namers block in your linkerd config:
 
 ```yaml
 namers:
-- kind: io.l5d.static
+- kind: io.static
   experimental: true
   services:
   - service1:127.0.0.1 8080 * 2, 127.0.0.1 8081
@@ -29,8 +29,8 @@ routers:
     segments: 1
     consume: false
   dtab: |
-    /svc/japi => /#/io.l5d.static/japi;
-    /svc/web => /#/io.l5d.static/web;
+    /svc/japi => /#/io.static/japi;
+    /svc/web => /#/io.static/web;
 
   httpAccessLog: logs/access.log
   label: int

@@ -12,7 +12,7 @@ import io.buoyant.namer.NamerInitializer
   *
   * <pre>
   * namers:
-  * - kind: io.l5d.static
+  * - kind: io.static
   *   experimental: true
   *   services:
   *     - web:127.0.0.1 8080,127.0.0.1 8081 * 2,127.0.0.1 8082
@@ -22,7 +22,7 @@ import io.buoyant.namer.NamerInitializer
 class StaticNamerInitializer extends NamerInitializer {
   override val configClass = classOf[StaticNamerConfig]
 
-  override def configId: String = "io.l5d.static"
+  override def configId: String = "io.static"
 }
 
 object StaticNamerInitializer extends StaticNamerInitializer
@@ -33,7 +33,7 @@ class StaticNamerConfig(services: Seq[String]) extends NamerConfig {
   override def experimentalRequired = true
 
   @JsonIgnore
-  override def defaultPrefix: Path = Path.read("/io.l5d.static")
+  override def defaultPrefix: Path = Path.read("/io.static")
 
   override protected def newNamer(params: Stack.Params): Namer = {
     new StaticNamer(services)
