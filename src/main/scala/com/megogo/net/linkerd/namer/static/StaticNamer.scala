@@ -16,21 +16,24 @@ import com.twitter.util.Var
 
 class StaticNamer(services: Seq[String]) extends Namer {
 
-  val servicesAddr: Map[String, Addr] = services.map { txt =>
-    txt.split(":") match {
-      case Array(name, addresses) => name -> addresses
-      case _ => throw MalformedServices(txt)
+  val servicesAddr: Map[String, Addr] = services
+    .map { txt =>
+      txt.split(":") match {
+        case Array(name, addresses) => name -> addresses
+        case _ => throw MalformedServices(txt)
+      }
     }
-  }.toMap.mapValues { txt =>
-    Try.collect(txt.split(",").map(t => StaticNamer.txtToAddress(t.trim))) match {
-      case Return(addrs) => Addr.Bound(addrs.toSet, Addr.Metadata.empty)
-      case Throw(e) => Addr.Failed(e)
+    .toMap
+    .mapValues { txt =>
+      Try.collect(txt.split(",").map(t => StaticNamer.txtToAddress(t.trim))) match {
+        case Return(addrs) => Addr.Bound(addrs.toSet, Addr.Metadata.empty)
+        case Throw(e) => Addr.Failed(e)
+      }
     }
-  }
 
   override def lookup(path: Path): Activity[NameTree[Name]] = {
     path.take(1) match {
-      case id@Path.Utf8(serviceName) =>
+      case id @ Path.Utf8(serviceName) =>
         servicesAddr.get(serviceName) match {
           case Some(addr) =>
             Activity.value(NameTree.Leaf(Name.Bound(Var(addr), id, path.drop(1))))
@@ -48,11 +51,9 @@ class StaticNamer(services: Seq[String]) extends Namer {
 
 object StaticNamer {
 
-  case class MalformedServices(text: String)
-    extends IllegalArgumentException(s"malformed services format: $text")
+  case class MalformedServices(text: String) extends IllegalArgumentException(s"malformed services format: $text")
 
-  case class MalformedAddress(text: String)
-    extends IllegalArgumentException(s"malformed address: $text")
+  case class MalformedAddress(text: String) extends IllegalArgumentException(s"malformed address: $text")
 
   private[this] val Whitespace = """\s+""".r
 
@@ -70,7 +71,9 @@ object StaticNamer {
     val Max = math.pow(2, 16) - 1
 
     def unapply(s: String): Option[Int] =
-      Try(s.toInt).toOption.filter { p => 0 < p && p <= Max }
+      Try(s.toInt).toOption.filter { p =>
+        0 < p && p <= Max
+      }
   }
 
   private object WeightNum {
