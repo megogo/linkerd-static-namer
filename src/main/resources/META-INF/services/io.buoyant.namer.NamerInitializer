@@ -1,1 +1,1 @@
-com.yarosman.namer.config.ConfigNamerInitializer
+com.megogo.net.linkerd.namer.static.StaticNamerInitializer
