@@ -1,6 +1,6 @@
 name := "linkerd-static-namer"
 
-version := "1.5.1"
+version := "1.4.6"
 
 scalaVersion := "2.12.7"
 
